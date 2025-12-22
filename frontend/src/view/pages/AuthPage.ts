@@ -1,0 +1,43 @@
+import { FormAuth } from "../../view/comps/FormAuth.js";
+import { Requests } from '../../models/RequestsModel.js';
+
+export class AuthPage {
+  private formAuth: FormAuth;
+  private requests: Requests;
+  private onSuccessCallback?: (() => void) | undefined; // колбэк для перехода на главную
+
+  constructor(containerId: string, onSuccess?: () => void) {
+    this.requests = new Requests();
+    this.onSuccessCallback = onSuccess;
+    this.formAuth = new FormAuth(containerId, this.handleAuthSubmit.bind(this));
+  }
+
+  private async handleAuthSubmit(username: string, password: string, isLogin: boolean) {
+    this.formAuth.setLoading(true);
+
+    try {
+      const result = isLogin 
+        ? await this.requests.login(username, password)
+        : await this.requests.register(username, password);
+
+      // Проверяем успешность по тексту сообщения (как в API)
+      if (result.message?.includes('успешно')) {
+        // Сохраняем токен (для login)
+        if (isLogin && result.token) {
+          localStorage.setItem('token', result.token);
+        }
+        
+        // Успешный логин/регистрация — переходим на главную
+        this.onSuccessCallback?.();
+      } else {
+        // Ошибка от сервера
+        this.formAuth.showError(result.message || 'Неизвестная ошибка');
+      }
+    } catch (error) {
+      console.error('Auth error:', error);
+      this.formAuth.showError('Ошибка сети. Проверьте подключение к серверу.');
+    } finally {
+      this.formAuth.setLoading(false);
+    }
+  }
+}

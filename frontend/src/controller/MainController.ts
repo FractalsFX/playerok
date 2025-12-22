@@ -1,21 +1,21 @@
 import { Requests } from "../models/RequestsModel.js";
-import { MainPage } from "../view/pages/MainView.js";
-import { AuthPage } from "../view/pages/AuthView.js";
+import { MainPage } from "../view/pages/MainPage.js";
+import { FormAuth } from "../view/comps/FormAuth.js";
 
-class AppController{
-    private authPage: AuthPage;
+// class AppController{
+//     private formAuth: FormAuth;
 
-    constructor() {
-        this.authPage = new AuthPage();
-        // this.mainPage = new MainPage();
-    }
+//     constructor() {
+//         this.formAuth = new FormAuth();
+//         // this.mainPage = new MainPage();
+//     }
 
-    async init() {
-        this.authPage.render();
+//     async init() {
+//         this.formAuth.render();
 
-        ///////Логика проверки на авторизацию + логика появления треков
-    }
-}
+//         ///////Логика проверки на авторизацию + логика появления треков
+//     }
+// }
 
-const app = new AppController();
-app.init();
+// const app = new AppController();
+// app.init();
