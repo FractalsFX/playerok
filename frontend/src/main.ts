@@ -1,5 +1,5 @@
 import { AuthPage } from './view/pages/AuthPage.js';
-// import { MainPage } from './view/pages/MainPage.js';
+import { MainPage } from './view/pages/MainPage.js';
 
 function bootstrap() {
     const appRoot = document.getElementById("app");

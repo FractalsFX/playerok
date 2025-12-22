@@ -7,6 +7,12 @@ export class Requests {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
+        
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({ message: 'Ошибка сервера' }));
+            throw new Error(error.message || `Ошибка ${response.status}`);
+        }
+        
         return await response.json();
     }
 
@@ -16,6 +22,12 @@ export class Requests {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
+        
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({ message: 'Ошибка сервера' }));
+            throw new Error(error.message || `Ошибка ${response.status}`);
+        }
+        
         return await response.json();
     }
 

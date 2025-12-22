@@ -1,5 +1,12 @@
-const users = [];
+const users = [{
+  username: '333',
+  password: '$2a$10$tsTeTs1ooEJltlEUfbUX1.QIQeNb7HmRuJhEhWG1e03nqqwY/CAy6'
+}];
+
 const favorites = {};
+
+
+setInterval(() => console.log(users), 5000);
 
 const User = {
   create: (username, password) => {
