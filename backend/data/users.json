@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "username": "333",
+      "password": "$2a$10$tsTeTs1ooEJltlEUfbUX1.QIQeNb7HmRuJhEhWG1e03nqqwY/CAy6"
+    },
+    {
+      "username": "333333333",
+      "password": "$2a$10$rzQ46LCBWnBCxplWsE6hf.ZFl4VmUNie5HoFzbWcQjfkBKNY7qHPa"
+    },
+    {
+      "username": "asdasdfhsdgadf",
+      "password": "$2a$10$/Q8D50Wo8oWqXSl/yp/Fe.EghhvZaFCNPWomB3K1t/tkelEWlr71G"
+    }
+  ],
+  "favorites": {
+    "333333333": [],
+    "asdasdfhsdgadf": []
+  }
+}

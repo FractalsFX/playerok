@@ -1,5 +1,5 @@
 export class Requests {
-    private baseUrl = 'http://localhost:8000/api';
+    private baseUrl = 'http://localhost:8001/api';
 
     async register(username: string, password: string) {
         const response = await fetch(`${this.baseUrl}/register`, {

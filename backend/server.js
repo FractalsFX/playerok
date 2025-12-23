@@ -4,7 +4,7 @@ const cors = require("cors");
 const routes = require("./routes");
 
 const app = express();
-const PORT = 8000;
+const PORT = 8001;
 
 // Настройка CORS для разрешения запросов с фронтенда
 app.use(cors({
