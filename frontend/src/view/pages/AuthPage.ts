@@ -4,9 +4,11 @@ import { Requests } from '../../models/RequestsModel.js';
 export class AuthPage {
   private formAuth: FormAuth;
   private requests: Requests;
+  private containerId: string;
   private onSuccessCallback?: (() => void) | undefined; // колбэк для перехода на главную
 
   constructor(containerId: string, onSuccess?: () => void) {
+    this.containerId = containerId;
     this.requests = new Requests();
     this.onSuccessCallback = onSuccess;
     this.formAuth = new FormAuth(containerId, this.handleAuthSubmit.bind(this));
@@ -26,6 +28,9 @@ export class AuthPage {
         if (isLogin && result.token) {
           localStorage.setItem('token', result.token);
         }
+        
+        const container = document.getElementById(this.containerId)!;
+        container.innerHTML = '';
         
         // Успешный логин/регистрация — переходим на главную
         this.onSuccessCallback?.();

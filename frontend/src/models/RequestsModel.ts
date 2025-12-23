@@ -7,12 +7,12 @@ export class Requests {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
-        
+
         if (!response.ok) {
             const error = await response.json().catch(() => ({ message: 'Ошибка сервера' }));
             throw new Error(error.message || `Ошибка ${response.status}`);
         }
-        
+
         return await response.json();
     }
 
@@ -22,12 +22,12 @@ export class Requests {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
-        
+
         if (!response.ok) {
             const error = await response.json().catch(() => ({ message: 'Ошибка сервера' }));
             throw new Error(error.message || `Ошибка ${response.status}`);
         }
-        
+
         return await response.json();
     }
 
@@ -35,6 +35,7 @@ export class Requests {
         const response = await fetch(`${this.baseUrl}/tracks`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
+        if (!response.ok) throw new Error('Ошибка загрузки треков');
         return await response.json();
     }
 
@@ -42,30 +43,22 @@ export class Requests {
         const response = await fetch(`${this.baseUrl}/favorites`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
+        if (!response.ok) throw new Error('Ошибка загрузки избранных треков');
         return await response.json();
     }
 
-    async addFavorite(token: string, trackId: string) {
+    async toggleFavorite(token: string, trackId: string, add: boolean) {
+        const method = add ? "POST" : "DELETE";
         const response = await fetch(`${this.baseUrl}/favorites`, {
-            method: 'POST',
+            method,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ trackId })
         });
-        return await response.json();
-    }
 
-    async removeFavorite(token: string, trackId: string) {
-        const response = await fetch(`${this.baseUrl}/favorites`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ trackId })
-        });
+        if (!response.ok) throw new Error('Ошибка добавления/удаления трека в/из в избранное/го');
         return await response.json();
     }
 }
