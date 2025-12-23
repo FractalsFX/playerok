@@ -89,7 +89,11 @@ const User = {
   },
 
   getFavorites: (username) => {
-    return favorites[username] || [];
+    console.log('User.getFavorites called with username:', username);
+    console.log('Current favorites object:', JSON.stringify(favorites, null, 2));
+    const result = favorites[username] || [];
+    console.log('Returning:', result);
+    return result;
   },
 };
 

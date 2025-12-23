@@ -24,10 +24,12 @@ const removeFromFavorites = (req, res) => {
 const getFavorites = (req, res) => {
   const username = req.user.username;
   const favoriteTracks = User.getFavorites(username);
-
+  
+  // Преобразуем все ID в строки для консистентного сравнения
   const favoriteTrackDetails = tracks.filter((track) =>
-    favoriteTracks.includes(track.id)
+    favoriteTracks.includes(String(track.id))
   );
+  
   res.json(favoriteTrackDetails);
 };
 

@@ -1,32 +1,17 @@
 {
   "users": [
     {
-      "username": "123456",
-      "password": "$2a$10$.6Xa2CTDu3J/2iUvDHdIsu0oGmyS9lGS6inhH3rFMlFMzEzyoUfnu"
+      "username": "333",
+      "password": "$2a$10$tsTeTs1ooEJltlEUfbUX1.QIQeNb7HmRuJhEhWG1e03nqqwY/CAy6"
     },
     {
-      "username": "111111",
-      "password": "$2a$10$6HVxhYbilgXl7c3Qf4sxs.U22gOKi0TA3DTnsln2qvJ4.ny.j0VTm"
+      "username": "123123",
+      "password": "$2a$10$QVRfM04/oOKqpFVjnv3G1u4JiS4MYdooux0PtJ8kXOufqLxdBOWq6"
     }
   ],
   "favorites": {
-    "111111": [
+    "123123": [
       "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7"
-    ],
-    "123456": [
-      "9",
-      "1",
-      "42",
-      "43",
-      "44",
-      "45",
-      "50",
       "2",
       "3",
       "4",
@@ -34,14 +19,12 @@
       "6",
       "7",
       "8",
-      "10",
-      "11",
-      "35",
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
+      "17",
+      "16",
+      "14",
+      "21",
+      "23",
+      "25",
       "41"
     ]
   }

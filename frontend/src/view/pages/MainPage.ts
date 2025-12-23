@@ -77,6 +77,8 @@ export class MainPage {
   private renderFavorites(): void {
     const container = document.getElementById('favoritesList') as HTMLElement;
 
+    console.log('чекаем избранные: ', this.trackModel.favorites);
+
     if (this.trackModel.favorites.length === 0) {
       container.innerHTML = '<p>Избранное пусто</p>';
     } else {
@@ -98,6 +100,8 @@ export class MainPage {
       const isCurrentlyFavorite = this.isFavorite(trackId);
       await this.requests.toggleFavorite(this.token, trackId, !isCurrentlyFavorite);
 
+      console.log(this.trackModel.favorites);
+
       if(isCurrentlyFavorite) {
         this.trackModel.favorites = this.trackModel.favorites.filter(fav => fav.id !== trackId);
       } else {
@@ -105,8 +109,9 @@ export class MainPage {
         if (track) this.trackModel.favorites.push(track);
       }
 
-      this.renderTracks();
-      this.renderFavorites();
+      // this.renderTracks();
+      // this.renderFavorites();
+      this.loadData();
     } catch(error) {
       console.error('Ошибка избранного', error)
     }
@@ -116,15 +121,16 @@ export class MainPage {
     document.getElementById('logoutBtn')?.addEventListener('click', () => {
       localStorage.removeItem('token');
       location.reload();
-      // const mainPage = new MainPage('app');
     });
 
     this.container.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
+      // this.renderFavorites();
 
       if(target.classList.contains('track-favorite-btn')) {
         const trackId = target.dataset.trackId!;
         this.toggleFavorite(trackId);
+        // this.renderFavorites();
       }
     })
   }
