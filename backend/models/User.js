@@ -76,6 +76,7 @@ const User = {
     const trackIdStr = String(trackId);
     if (!favorites[username].includes(trackIdStr)) {
       favorites[username].push(trackIdStr);
+      console.log(`User ${username} add track ${trackId} to favorites`);
       saveData();
     }
   },
@@ -86,16 +87,17 @@ const User = {
       const index = favorites[username].indexOf(trackIdStr);
       if (index > -1) {
         favorites[username].splice(index, 1);
+        console.log(`User ${username} remove track ${trackId} from favorites`);
         saveData(); // Сохраняем данные в файл
       }
     }
   },
 
   getFavorites: (username) => {
-    console.log('User.getFavorites called with username:', username);
-    console.log('Current favorites object:', JSON.stringify(favorites, null, 2));
+    // console.log('User.getFavorites called with username:', username);
+    // console.log('Current favorites object:', JSON.stringify(favorites, null, 2));
     const result = favorites[username] || [];
-    console.log('Returning:', result);
+    // console.log('Returning:', result);
     return result;
   },
 };

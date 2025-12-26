@@ -1,5 +1,6 @@
 import { FormAuth } from "../../view/comps/FormAuth.js";
 import { Requests } from '../../models/RequestsModel.js';
+import { RouterInstance } from "../../main.js";
 
 export class AuthPage {
   private formAuth: FormAuth;
@@ -24,24 +25,40 @@ export class AuthPage {
 
       // Проверяем успешность по тексту сообщения (как в API)
       if (result.message?.includes('успешно')) {
-        // Сохраняем токен (для login)
+        let token: string | null = null;
+        
+        // Если это логин, токен уже в ответе
         if (isLogin && result.token) {
-          localStorage.setItem('token', result.token);
+          token = result.token;
+        } 
+        // Если это регистрация, нужно автоматически залогинить пользователя
+        else if (!isLogin) {
+          const loginResult = await this.requests.login(username, password);
+          if (loginResult.token) {
+            token = loginResult.token;
+          }
         }
         
+        // Сохраняем токен
+        if (token) {
+          localStorage.setItem('token', token);
+        }
+        
+        this.formAuth.setLoading(false);
+
         const container = document.getElementById(this.containerId)!;
         container.innerHTML = '';
         
-        // Успешный логин/регистрация — переходим на главную
         this.onSuccessCallback?.();
+        RouterInstance.go('/main');
       } else {
         // Ошибка от сервера
         this.formAuth.showError(result.message || 'Неизвестная ошибка');
+        this.formAuth.setLoading(false);
       }
     } catch (error) {
       console.error('Auth error:', error);
       this.formAuth.showError('Ошибка сети. Проверьте подключение к серверу.');
-    } finally {
       this.formAuth.setLoading(false);
     }
   }

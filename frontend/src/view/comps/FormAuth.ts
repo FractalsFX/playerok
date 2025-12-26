@@ -74,7 +74,6 @@ export class FormAuth {
       this.toggleMode();
     });
 
-    //Меняем текст кнопки отправки формы исходя из состояния
     const submitBtn = this.container.querySelector('.auth-form__submit') as HTMLButtonElement;
     submitBtn.textContent = this.isLoginMode ? 'Войти' : 'Зарегистрироваться';
   }
@@ -153,6 +152,7 @@ export class FormAuth {
 
   public setLoading(loading: boolean) {
     const submitBtn = this.container.querySelector('.auth-form__submit') as HTMLButtonElement;
+    if(!submitBtn) return;
     submitBtn.disabled = loading;
     submitBtn.textContent = loading ? 'Загрузка' : (this.isLoginMode ? 'Войти' : 'Зарегистрироваться');
   }

@@ -1,5 +1,6 @@
 import { TrackModel, type Track } from "../../models/TrackModel.js";
 import { Requests } from "../../models/RequestsModel.js";
+import { RouterInstance } from "../../main.js";
 
 export class MainPage {
   private container: HTMLElement;
@@ -12,8 +13,8 @@ export class MainPage {
     this.trackModel = new TrackModel();
     this.requests = new Requests();
     this.token = localStorage.getItem(`token`)!;
-    this.render();
     this.loadData();
+    this.render();
     this.bindEvents();
   }
 
@@ -28,10 +29,9 @@ export class MainPage {
       this.trackModel.setFavorites(favorites);
 
       // console.log(this.trackModel.favorites, 'favorites');
-      
+
       this.renderFavorites();
       this.renderTracks();
-      
     } catch (error) {
       console.error('Ошибка загрузки данных: ', error);
       this.showError('Не удалось загрузить данные');
@@ -82,6 +82,7 @@ export class MainPage {
 
   private renderFavorites(): void {
     const container = document.getElementById('favoritesList') as HTMLElement;
+    if(!container) return;
 
     if (this.trackModel.favorites.length === 0) {
       container.innerHTML = '<p>Избранное пусто</p>';
@@ -122,12 +123,12 @@ export class MainPage {
   private bindEvents() {
     document.getElementById('logoutBtn')?.addEventListener('click', () => {
       localStorage.removeItem('token');
+      RouterInstance.go("/auth");
       location.reload();
     });
 
     this.container.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
-      // this.renderFavorites();
 
       if (target.classList.contains('track-favorite-btn')) {
         const trackId = target.dataset.trackId!;

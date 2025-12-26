@@ -7,6 +7,26 @@
     {
       "username": "123123",
       "password": "$2a$10$QVRfM04/oOKqpFVjnv3G1u4JiS4MYdooux0PtJ8kXOufqLxdBOWq6"
+    },
+    {
+      "username": "1337",
+      "password": "$2a$10$0dW1TKHsRffYjckipA3iPu/9uxS7RHvw4mmE4NqK4aR.KaAokjJSC"
+    },
+    {
+      "username": "4321",
+      "password": "$2a$10$.dQRMBxqdiAJTpUs6PU5xOxyOjgr6Iw9d5UhQg42q7s1Ik1JVutLC"
+    },
+    {
+      "username": "555555",
+      "password": "$2a$10$Rx8F8hWpsDa8rukoK2nKvui8cx3wCPXMCGwGHXfj.GomxkxQN.JAa"
+    },
+    {
+      "username": "999999",
+      "password": "$2a$10$ksdIKq95sGHYpJ8Cqn6bj.Ljv1FlNbUrz2ylBqfOMeAXfAu738MxW"
+    },
+    {
+      "username": "zxczxc",
+      "password": "$2a$10$VCiALbdGcRqaIlR5o4nLte2uQIsNrKUMD.xg3O8h9eeo3VtkrGpxm"
     }
   ],
   "favorites": {
@@ -15,6 +35,26 @@
       "2",
       "3"
     ],
-    "123123": []
+    "1337": [],
+    "4321": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "123123": [
+      "1",
+      "50",
+      "2"
+    ],
+    "555555": [],
+    "999999": [],
+    "zxczxc": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "13"
+    ]
   }
 }
