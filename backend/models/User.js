@@ -72,15 +72,18 @@ const User = {
     if (!favorites[username]) {
       favorites[username] = [];
     }
-    if (!favorites[username].includes(trackId)) {
-      favorites[username].push(trackId);
-      saveData(); // Сохраняем данные в файл
+    // Преобразуем trackId в строку для консистентности
+    const trackIdStr = String(trackId);
+    if (!favorites[username].includes(trackIdStr)) {
+      favorites[username].push(trackIdStr);
+      saveData();
     }
   },
 
   removeFavorite: (username, trackId) => {
     if (favorites[username]) {
-      const index = favorites[username].indexOf(trackId);
+      const trackIdStr = String(trackId);
+      const index = favorites[username].indexOf(trackIdStr);
       if (index > -1) {
         favorites[username].splice(index, 1);
         saveData(); // Сохраняем данные в файл

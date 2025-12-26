@@ -26,10 +26,10 @@ const getFavorites = (req, res) => {
   const favoriteTracks = User.getFavorites(username);
   
   // Преобразуем все ID в строки для консистентного сравнения
-  const favoriteTrackDetails = tracks.filter((track) =>
-    favoriteTracks.includes(String(track.id))
-  );
-  
+  const favoriteTrackDetails = favoriteTracks
+                                              .map(trackId => tracks.find(track => String(track.id) === String(trackId)))
+                                              .filter(track => track !== undefined);
+
   res.json(favoriteTrackDetails);
 };
 

@@ -1,6 +1,5 @@
-import { TrackModel } from "../../models/TrackModel.js";
+import { TrackModel, type Track } from "../../models/TrackModel.js";
 import { Requests } from "../../models/RequestsModel.js";
-import { AuthPage } from "../../view/pages/AuthPage.js";
 
 export class MainPage {
   private container: HTMLElement;
@@ -27,8 +26,12 @@ export class MainPage {
 
       this.trackModel.setTracks(tracks);
       this.trackModel.setFavorites(favorites);
-      this.renderTracks();
+
+      // console.log(this.trackModel.favorites, 'favorites');
+      
       this.renderFavorites();
+      this.renderTracks();
+      
     } catch (error) {
       console.error('Ошибка загрузки данных: ', error);
       this.showError('Не удалось загрузить данные');
@@ -65,54 +68,53 @@ export class MainPage {
     const container = document.getElementById('tracksList');
     if (!container) return;
 
-    container.innerHTML = this.trackModel.tracks.map(track => `
+    container.innerHTML = this.trackModel.tracks.map(track => {
+      const isFav = this.isFavorite(track.id);
+      return `
       <div class="track-item" data-track-id="${track.id}">
-        <span class="track-title">${track.title}</span>
+        <span class="track-title">${track.id + ' ' + track.title}</span>
         <span class="track-artist">${track.artist}</span>
-        <button class="track-favorite-btn ${this.isFavorite(track.id) ? 'active' : ''}" data-track-id="${track.id}">❤️</button>
-      </div>
-      `).join('');
+        <button class="track-favorite-btn ${isFav ? 'active' : ''}" data-track-id="${track.id}">${isFav ? '✔️' : '❌'}</button>
+      </div>`;
+    }).join('');
   }
+
 
   private renderFavorites(): void {
     const container = document.getElementById('favoritesList') as HTMLElement;
-
-    console.log('чекаем избранные: ', this.trackModel.favorites);
 
     if (this.trackModel.favorites.length === 0) {
       container.innerHTML = '<p>Избранное пусто</p>';
     } else {
       container.innerHTML = this.trackModel.favorites.map(track => `
         <div class="track-item favorite-item" data-track-id="${track.id}">
-          <span class="track-title">${track.title}</span>
+          <span class="track-title">${track.id + ' ' + track.title}</span>
           <span class="track-artist">${track.artist}</span>
+          <button class="track-favorite-btn ${this.isFavorite(track.id) ? 'active' : ''}" data-track-id="${track.id}">✔️</button>
         </div>
       `).join('');
     }
   }
 
   private isFavorite(trackId: string): boolean {
-    return this.trackModel.favorites.some(fav => fav.id === trackId);
+    return this.trackModel.favorites.some(fav => String(fav.id) === String(trackId));
   }
 
   private async toggleFavorite(trackId: string) {
     try {
       const isCurrentlyFavorite = this.isFavorite(trackId);
+      console.log('favorite?', isCurrentlyFavorite)
       await this.requests.toggleFavorite(this.token, trackId, !isCurrentlyFavorite);
 
-      console.log(this.trackModel.favorites);
-
-      if(isCurrentlyFavorite) {
+      if (isCurrentlyFavorite) {
         this.trackModel.favorites = this.trackModel.favorites.filter(fav => fav.id !== trackId);
       } else {
         const track = this.trackModel.tracks.find(track => track.id === trackId);
         if (track) this.trackModel.favorites.push(track);
       }
 
-      // this.renderTracks();
-      // this.renderFavorites();
       this.loadData();
-    } catch(error) {
+    } catch (error) {
       console.error('Ошибка избранного', error)
     }
   }
@@ -127,10 +129,10 @@ export class MainPage {
       const target = e.target as HTMLElement;
       // this.renderFavorites();
 
-      if(target.classList.contains('track-favorite-btn')) {
+      if (target.classList.contains('track-favorite-btn')) {
         const trackId = target.dataset.trackId!;
+        // console.log(trackId);
         this.toggleFavorite(trackId);
-        // this.renderFavorites();
       }
     })
   }
@@ -138,5 +140,4 @@ export class MainPage {
   private showError(message: string) {
     console.error(message);
   }
-
 }
