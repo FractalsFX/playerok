@@ -1,5 +1,6 @@
 import { AuthPage } from "../view/pages/AuthPage.js";
 import { MainPage } from "../view/pages/MainPage.js";
+// import { FavoritesPage } from "../view/pages/FavoritesPage.js";
 
 interface Route {
     path: string,
@@ -21,6 +22,7 @@ export class Router {
 
     private initRoutes() {
         this.routes = [
+            { path: '/', component: AuthPage, requiresAuth: false},
             { path: '/main', component: MainPage, requiresAuth: true},
             { path: '/auth', component: AuthPage, requiresAuth: false}
         ];
@@ -44,14 +46,20 @@ export class Router {
 
     private navigate(path: string) {
         const token = localStorage.getItem('token');
-        const route = this.routes.find(r => r.path === path)!;
+        let route = this.routes.find(r => r.path === path)!;
 
         if(!route) {
             path = '/';
             window.history.pushState({}, '', path);
+            route = this.routes.find(r => r.path === path)!;
         } else if (route.requiresAuth && !token) {
             path = '/auth';
             window.history.pushState({}, '', path);
+            route = this.routes.find(r => r.path === path)!;
+        } else if (!route.requiresAuth && token && (path === '/' || path === '/auth')) {
+            path = '/main';
+            window.history.pushState({}, '', path);
+            route = this.routes.find(r => r.path === path)!;
         }
 
         const container = document.getElementById(this.containerId)!;

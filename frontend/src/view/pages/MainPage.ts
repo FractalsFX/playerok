@@ -27,9 +27,6 @@ export class MainPage {
 
       this.trackModel.setTracks(tracks);
       this.trackModel.setFavorites(favorites);
-
-      // console.log(this.trackModel.favorites, 'favorites');
-
       this.renderFavorites();
       this.renderTracks();
     } catch (error) {
@@ -43,6 +40,7 @@ export class MainPage {
     <header class="main-header">
         <h1 class="main-title">Аудиоплеер</h1>
         <button class="btn btn--secondary logout-btn" id="logoutBtn">Выйти</button>
+        <button class="btn btn--secondary toFavorites-btn" id="toFavoritesBtn">Избранные</button>
       </header>
 
       <div class="main-content">
@@ -63,6 +61,8 @@ export class MainPage {
       </div>
     `;
   }
+
+
 
   private renderTracks(): void {
     const container = document.getElementById('tracksList');
@@ -127,12 +127,16 @@ export class MainPage {
       location.reload();
     });
 
+    // document.getElementById('toFavoritesBtn')?.addEventListener('click', () => {
+    //   // RouterInstance.go("/favorites");
+    //   this.renderFavorites();
+    // });
+
     this.container.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
 
       if (target.classList.contains('track-favorite-btn')) {
         const trackId = target.dataset.trackId!;
-        // console.log(trackId);
         this.toggleFavorite(trackId);
       }
     })
